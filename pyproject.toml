@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fdfl-reproduce"
+version = "1.0.0"
+description = "Minimal reproduction package for the Fair Decision-Focused Learning (FDFL) experiments"
+requires-python = ">=3.10"
+dependencies = [
+    # The fair_dfl algorithm package is installed separately from the bundled
+    # wheel — see README.md ("Setup"). It is intentionally not listed here
+    # because a wheel is shipped in wheels/ rather than fetched from an index.
+    "torch>=2.0",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "cvxpy>=1.3",
+    "cvxpylayers>=0.1.6",  # required for the MD-knapsack decision-gradient backend
+    "matplotlib>=3.7",
+]
+
+[tool.setuptools]
+py-modules = []
+
+[tool.setuptools.packages.find]
+include = ["fdfl_harness*"]

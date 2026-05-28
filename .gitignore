@@ -1,0 +1,10 @@
+# Raw public cohort (downloaded by data/prepare_data.py, not redistributed)
+data/data_new.csv
+# Reconstructed processed data (built locally)
+data/data_processed.csv
+# Solver licenses (user-provided)
+*.lic
+# Python
+__pycache__/
+*.pyc
+.venv/
