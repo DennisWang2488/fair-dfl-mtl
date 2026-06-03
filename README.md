@@ -1,10 +1,11 @@
 # Fair Decision-Focused Learning (FDFL) — reproduction package
 
 This package reproduces the experimental results in the paper. It contains the
-experiment drivers, the aggregation scripts that build the result tables, the
-data-preparation script, and reference copies of the published tables for
-comparison. The reusable algorithm code is shipped as a prebuilt wheel
-(`wheels/fair_dfl_moo-*.whl`).
+experiment drivers, the aggregation scripts that build the result tables, and the
+data-preparation (download) script. The reusable algorithm code is shipped as a
+prebuilt wheel (`wheels/fair_dfl_moo-*.whl`). No data or result CSVs are shipped:
+the public cohort is downloaded by `data/prepare_data.py`, and result tables are
+produced by running the drivers + aggregators below.
 
 ## Contents
 
@@ -25,11 +26,16 @@ ijoc_reproduce/
 │   ├── build_md_d3_tables.py
 │   ├── build_individual_table.py
 │   └── md_d2_tables.py
-├── results_reference/       published tables, for comparison
 ├── runs/                    raw + aggregated outputs land here (gitignored)
 ├── reproduce.sh             end-to-end driver (smoke + full modes)
+├── METHODS.md               method catalog: paper label -> code key -> LaTeX pseudocode -> reference
 └── pyproject.toml
 ```
+
+See [`METHODS.md`](METHODS.md) for the canonical mapping between paper labels
+(PTO, FPTO, SAA, WDRO, DFL, FDFL, FDFL-Scal-μ, FPLG-κ, PCGrad, MGDA, NashMTL,
+CAGrad), the `method=...` keys used in code, the inline `MethodSpec` flags,
+LaTeX pseudocode for each method, and the original publication for each one.
 
 ## Setup
 
@@ -78,12 +84,12 @@ bash reproduce.sh full      # full grids (long; see timing below)
 Or run any track manually — each driver writes raw `stage_results.csv` files
 under `runs/`, and each aggregator turns them into the result tables:
 
-| Result set | Run | Aggregate | Reference |
-|---|---|---|---|
-| HC group (main) | `python experiments/run_hc_group.py` | `python aggregate/aggregate_hc_main.py` | `results_reference/healthcare/` |
-| MD D=3 (main) | `python experiments/run_md_d3.py` | `python aggregate/build_md_d3_tables.py mad 2.0` | `results_reference/md_d3/` |
-| HC individual (appendix) | `python experiments/run_hc_individual.py` | `python aggregate/build_individual_table.py` | `results_reference/healthcare_individual/` |
-| MD D=2 (archive) | `python experiments/run_md_d2.py --mode imbalance` and `--mode extension` | `python aggregate/md_d2_tables.py mad 2.0` | `results_reference/md_d2/` |
+| Result set | Run | Aggregate |
+|---|---|---|
+| HC group (main) | `python experiments/run_hc_group.py` | `python aggregate/aggregate_hc_main.py` |
+| MD D=3 (main) | `python experiments/run_md_d3.py` | `python aggregate/build_md_d3_tables.py mad 2.0` |
+| HC individual (appendix) | `python experiments/run_hc_individual.py` | `python aggregate/build_individual_table.py` |
+| MD D=2 (archive) | `python experiments/run_md_d2.py --mode imbalance` and `--mode extension` | `python aggregate/md_d2_tables.py mad 2.0` |
 
 All drivers accept `--help`. Common flags: `--seeds`, `--overwrite`, and
 (HC group) `--fairness`, `--alpha`, plus `--smoke`/`--n-sample`/`--steps`.
@@ -109,9 +115,6 @@ All drivers accept `--help`. Common flags: `--seeds`, `--overwrite`, and
   bit-identical results).
 - **DFL row.** The published `dfl` row is `fdfl` at `lambda=0` (decision-only
   equivalent); the HC aggregator renames it rather than running DFL separately.
-- **`source` column.** `results_reference/healthcare/main_table_per_method.csv`
-  carries a historical `source` provenance column; the reproduced table omits
-  it (single source). All other columns match.
 - **Benefit construction.** The healthcare benefit score uses the raw released
   `cost_avoidable_t` (no nearest-neighbor imputation); see
   [data/README.md](data/README.md).

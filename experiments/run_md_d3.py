@@ -14,6 +14,10 @@ subset; FDFL/FDFL-Scal carry a moderate lambda/mu grid.
   | Prediction-anchor     | FPLG-kappa1       | {0, 1}              |
   | MOO                   | PCGrad            | {0}                 |
   | MOO                   | MGDA              | {0}                 |
+  | MOO                   | NashMTL           | {0}                 |
+  | MOO                   | CAGrad            | {0}                 |
+  | Robust baseline       | SAA               | {0}                 |
+  | Robust baseline       | WDRO              | {0}                 |
 
   Lambda = 0 / 1 for FPLG-kappa1 captures the PLG-vs-FPLG contrast
   (no-fairness vs with-fairness) under the same anchor schedule.
@@ -69,11 +73,16 @@ def method_configs_subset() -> list[tuple]:
         ("FPTO",             "FPTO",      {},                                [0.0, 0.5, 1.0]),
         ("DFL",              "DFL",       {},                                [0.0]),
         ("FDFL",             "FDFL",      {},                                [0.0, 0.5, 1.0, 2.0]),
-        ("FDFL-Scal-mu0.1",  "FDFL-Scal", {"pred_weight_mode": "0.1"},       [0.0, 0.5, 1.0, 2.0]),
-        ("FDFL-Scal-mu1",    "FDFL-Scal", {"pred_weight_mode": "fixed1"},    [0.0, 0.5, 1.0, 2.0]),
+        ("FDFL-Scal-mu0.1",  "FDFL-Scal", {"pred_weight_mode": "0.1", "gradient_merge": "raw"},       [0.0, 0.5, 1.0, 2.0]),
+        ("FDFL-Scal-mu1",    "FDFL-Scal", {"pred_weight_mode": "fixed1", "gradient_merge": "raw"},    [0.0, 0.5, 1.0, 2.0]),
         ("FPLG-kappa1",      "FPLG",      {"mo_plg_kappa_decay": 0.01},      [0.0, 1.0]),
         ("PCGrad",           "PCGrad",    {},                                [0.0]),
         ("MGDA",             "MGDA",      {},                                [0.0]),
+        # 2026-05-30: parity with the paper's MD-D3 method coverage (HC has these too).
+        ("NashMTL",          "NashMTL",   {},                                [0.0]),
+        ("CAGrad",           "CAGrad",    {},                                [0.0]),
+        ("SAA",              "SAA",       {},                                [0.0]),
+        ("WDRO",             "WDRO",      {},                                [0.0]),
     ]
 
 

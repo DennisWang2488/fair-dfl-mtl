@@ -86,17 +86,17 @@ ALL_METHOD_CONFIGS = {
     "FDFL":      {"method": "fdfl", "use_dec": True,  "use_pred": False, "use_fair": True,
                   "pred_weight_mode": "zero"},
     "FDFL-0.1":  {"method": "fair_moo", "use_dec": True, "use_pred": True, "use_fair": True,
-                  "pred_weight_mode": "0.1"},
+                  "pred_weight_mode": "0.1", "gradient_merge": "raw"},
     "FDFL-0.5":  {"method": "fair_moo", "use_dec": True, "use_pred": True, "use_fair": True,
-                  "pred_weight_mode": "0.5"},
+                  "pred_weight_mode": "0.5", "gradient_merge": "raw"},
     "FDFL-Scal": {"method": "fair_moo", "use_dec": True, "use_pred": True, "use_fair": True,
-                  "pred_weight_mode": "fixed1"},
+                  "pred_weight_mode": "fixed1", "gradient_merge": "raw"},
     "FDFL-Scal-mu0.01": {"method": "fair_moo", "use_dec": True, "use_pred": True, "use_fair": True,
-                         "pred_weight_mode": "0.01"},
+                         "pred_weight_mode": "0.01", "gradient_merge": "raw"},
     # FDFL-Scal-mu2: mu = 2 (heavy prediction anchor). Matches the MD knapsack
     # mu-extension at FDFL-Scal-mu2 used in `tab:md-v2-imb*`.
     "FDFL-Scal-mu2": {"method": "fair_moo", "use_dec": True, "use_pred": True, "use_fair": True,
-                      "pred_weight_mode": "2.0"},
+                      "pred_weight_mode": "2.0", "gradient_merge": "raw"},
 
     # ================================================================
     # Dynamic decision-focused — adaptive per-step combination
